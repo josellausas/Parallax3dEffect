@@ -4,6 +4,10 @@ settings =
 	{
 		plist = 
 		{
+			UIAppFonts = 
+			{
+				--"MarkerFelt.ttc"
+			},
 
 			UIStatusBarHidden = true,
 			CFBundleIconFile = "Icon.png",
@@ -14,14 +18,29 @@ settings =
 				"Icon-72.png",
 			},
 
+			MinimumOSVersion = "5.1.0",
+
 		},
 	},
+
+	android = 
+	{
+		usesPermissions = 
+		{
+			"android.permission.VIBRATE",
+		}
+	}
 
 
     orientation =
     {
         default = "landscapeRight",
-        supported = {"landscapeRight"},
+        supported = {"landscapeRight", "landscapeLeft"},
+
+        -- portrait
+        -- portraitUpsideDown
+        -- landscapeRight
+        -- landscapeLeft
         
     },
 }

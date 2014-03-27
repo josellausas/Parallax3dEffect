@@ -8,12 +8,15 @@ application =
 	content =
 	{	
 		width = 768,
-		height = 1024,
+		height = 1136,
+
+		fps = 30,
+		-- fps = 60,
 		
 		--scale values: none, letterbox, zoomEven, zoomStretch
 		scale = "zoomEven",
-		xAlign = "left",
-		yAlign = "top",
+		xAlign = "center",
+		yAlign = "center",
 		
 		--for HD/Retina phones, multiple Image selection FTW:
 		imageSuffix = 
