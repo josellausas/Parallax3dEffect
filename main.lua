@@ -20,4 +20,4 @@ end
 -- Sets up the app
 setupApp(nil)
 -- Goes to the first scene
-storyboard.gotoScene("src.Scenes.Scene01", "fade", 100)
+storyboard.gotoScene("scenes.scene01", "fade", 100)
