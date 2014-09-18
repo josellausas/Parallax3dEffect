@@ -5,7 +5,7 @@
 ]]
 
 local storyboard = require("storyboard")
-local ll 		 = require("src.llauColors")
+local ll 	     = require("src.llauColors")
 
 -- This will setup the app with settings
 local function setupApp(settings)
