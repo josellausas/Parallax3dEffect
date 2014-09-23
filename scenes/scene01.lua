@@ -7,6 +7,7 @@ local storyboard = require("storyboard")
 local scene = storyboard.newScene()
 
 local debugText = nil
+local calibrateY = 0
 
 -- Our acceleration
 local gravity = {}
@@ -26,6 +27,9 @@ rawGravity.z = 0
 
 
 local reference_0 = nil
+local reference_5 = nil
+local reference_10 = nil
+
 
 local function centerImage(img)
         img.anchorX = 0.5
@@ -36,8 +40,9 @@ end
 
 local function accelerometerUpdate(event)
 
-        gravity.x = event.xGravity
-        gravity.y = event.yGravity
+        -- Flip x-y for protrait mode
+        gravity.x = event.yGravity
+        gravity.y = event.xGravity
         gravity.z = event.zGravity
 
         instantGravity.x, instantGravity.y, instantGravity.z = event.xInstant, event.yInstant, event.zInstant
@@ -45,20 +50,33 @@ local function accelerometerUpdate(event)
         rawGravity.x, rawGravity.y, rawGravity.z = event.xRaw, event.yRaw, event.zRaw
 
 
-        debugText.text = "Gravity: " .. instantGravity.x .. " , " .. instantGravity.y  .. " , " .. instantGravity.z
+        debugText.text = "Gravity: " .. gravity.x .. " , " .. gravity.y  .. " , " .. gravity.z
 
 end
 
+local movementFactor = 200
+
 local function onUpdate( event )
-        
-        reference_10.x = display.contentCenterX + (gravity.y * 200)
-        reference_10.y = display.contentCenterY + (gravity.x * 200)
+
+        reference_10.x = display.contentCenterX + (gravity.x * movementFactor)
+        reference_10.y = display.contentCenterY + ((gravity.y - calibrateY) * movementFactor)
+
+        reference_5.x = display.contentCenterX + (gravity.x * movementFactor) * 0.5
+        reference_5.y = display.contentCenterY + ((gravity.y - calibrateY) * movementFactor) * 0.5
 
 end
 
 local function createDebugTexts()
         debugText = display.newText( "Hello World!", 100, 200, native.systemFont, 20 )
         debugText.anchorX = 0
+end
+
+local function calibrateNow(event)
+
+        if(event.phase == "began") then 
+                calibrateY = gravity.y
+                print("calibrated -> " .. gravity.y )
+        end
 end
 
 -- Called when the scene's view does not exist:
@@ -68,6 +86,7 @@ function scene:createScene( event )
         system.setAccelerometerInterval( 100 ) -- 100 hz is max
 
         reference_10 = display.newImage("res/bg.jpg")
+        reference_5  = display.newImage( "res/sombrero.png")
         reference_0 = display.newImage( "res/test.png" )
 
         createDebugTexts()
@@ -83,7 +102,12 @@ function scene:willEnterScene( event )
         reference_0.xScale = 0.5
         reference_0.yScale = 0.5
 
+        reference_5.xScale = 1.1
+        reference_5.yScale = 1.1
+
+
         centerImage(reference_0)
+        centerImage(reference_5)
         centerImage(reference_10)
 
 end
@@ -93,6 +117,8 @@ function scene:enterScene( event )
         local group = self.view
 
         print("Entered Scene")
+
+        reference_0:addEventListener( "touch", calibrateNow )
 
         Runtime:addEventListener( "accelerometer" , accelerometerUpdate) 
         Runtime:addEventListener( "enterFrame"        , onUpdate )   
