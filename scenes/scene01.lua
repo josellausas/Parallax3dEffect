@@ -45,7 +45,14 @@ local function accelerometerUpdate(event)
         rawGravity.x, rawGravity.y, rawGravity.z = event.xRaw, event.yRaw, event.zRaw
 
 
-        debugText.text = "Gravity: " .. gravity.x .. " , " .. gravity.y  .. " , " .. gravity.z
+        debugText.text = "Gravity: " .. instantGravity.x .. " , " .. instantGravity.y  .. " , " .. instantGravity.z
+
+end
+
+local function onUpdate( event )
+        
+        reference_10.x = display.contentCenterX + (gravity.y * 200)
+        reference_10.y = display.contentCenterY + (gravity.x * 200)
 
 end
 
@@ -87,7 +94,8 @@ function scene:enterScene( event )
 
         print("Entered Scene")
 
-        Runtime:addEventListener( "accelerometer" , accelerometerUpdate)    
+        Runtime:addEventListener( "accelerometer" , accelerometerUpdate) 
+        Runtime:addEventListener( "enterFrame"        , onUpdate )   
 
 
 
