@@ -86,7 +86,7 @@ function scene:createScene( event )
         system.setAccelerometerInterval( 100 ) -- 100 hz is max
 
         reference_10 = display.newImage("res/bg.jpg")
-        reference_5  = display.newImage( "res/sombrero.png")
+        reference_5  = display.newImage( "res/test.png")
         reference_0 = display.newImage( "res/test.png" )
 
         createDebugTexts()
@@ -102,8 +102,10 @@ function scene:willEnterScene( event )
         reference_0.xScale = 0.5
         reference_0.yScale = 0.5
 
-        reference_5.xScale = 1.1
-        reference_5.yScale = 1.1
+        reference_5.xScale = 0.75
+        reference_5.yScale = 0.75
+
+        reference_5.alpha = 0.50
 
 
         centerImage(reference_0)
