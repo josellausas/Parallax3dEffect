@@ -6,9 +6,13 @@ local storyboard = require("storyboard")
 ---------------------------------------------------------------------------------
 local scene = storyboard.newScene()
 
+local reference_0 = nil
+
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
         local group = self.view
+
+        reference_0 = display.newImage( "res/test.png" )
 
 end
 
@@ -16,13 +20,21 @@ end
 function scene:willEnterScene( event )
         local group = self.view
 
+        reference_0.anchorX = 0.5
+        reference_0.anchorY = 0.5
+
+        reference_0.x = display.contentCenterX
+        reference_0.y = display.contentCenterY
+
 end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
         local group = self.view
 
-        print("Hello World")
+        print("Entered Scene")
+
+
 
 end
 
