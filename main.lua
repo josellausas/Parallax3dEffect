@@ -1,23 +1,25 @@
 --[[
  	App by jose@josellausas.com
 
-	Created: --/--/--
+	Created: 18/Sept/2014
 ]]
 
 local storyboard = require("storyboard")
 local ll 	     = require("src.llauColors")
-
--- This will setup the app with settings
-local function setupApp(settings)
-	display.setStatusBar( display.HiddenStatusBar )
-
-	print(ll.blink .. ll.blue .. "Done setting up app" .. ll.off)
-end
+local setup 	 = require("src.setup")
+local grabber    = require("src.infoGrabber")
 
 -- ****************
 -- * Starts here: *
 -- ****************
+
 -- Sets up the app
-setupApp(nil)
+setup.setupApp(nil)
+
+print(ll.blink .. ll.blue .. "Done setting up app" .. ll.off)
+
+-- Print some info here
+grabber:deviceInfo()
+
 -- Goes to the first scene
 storyboard.gotoScene("scenes.scene01", "fade", 100)
