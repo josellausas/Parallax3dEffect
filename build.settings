@@ -1,2 +1,24 @@
-#SolaresAvene
-####code by jose@josellausas.com
+
+settings =
+{
+	iphone = 
+	{
+		plist = 
+		{
+			
+		},
+	},
+	android = 
+	{
+		usesPermissions = 
+		{
+			"android.permission.VIBRATE",
+		},
+	},
+    orientation =
+    {
+        default = "landscapeRight",
+        supported = {"landscapeRight"},
+        
+    },
+}

@@ -6,13 +6,66 @@ local storyboard = require("storyboard")
 ---------------------------------------------------------------------------------
 local scene = storyboard.newScene()
 
+local debugText = nil
+
+-- Our acceleration
+local gravity = {}
+gravity.x = 0
+gravity.y = 0
+gravity.z = 0
+
+local instantGravity = {}
+instantGravity.x = 0
+instantGravity.y = 0
+instantGravity.z = 0
+
+local rawGravity = {}
+rawGravity.x = 0
+rawGravity.y = 0
+rawGravity.z = 0
+
+
 local reference_0 = nil
+
+local function centerImage(img)
+        img.anchorX = 0.5
+        img.anchorY = 0.5
+        img.x = display.contentCenterX
+        img.y = display.contentCenterY
+end
+
+local function accelerometerUpdate(event)
+
+        gravity.x = event.xGravity
+        gravity.y = event.yGravity
+        gravity.z = event.zGravity
+
+        instantGravity.x, instantGravity.y, instantGravity.z = event.xInstant, event.yInstant, event.zInstant
+
+        rawGravity.x, rawGravity.y, rawGravity.z = event.xRaw, event.yRaw, event.zRaw
+
+
+        debugText.text = "Gravity: " .. gravity.x .. " , " .. gravity.y  .. " , " .. gravity.z
+
+end
+
+local function createDebugTexts()
+        debugText = display.newText( "Hello World!", 100, 200, native.systemFont, 20 )
+        debugText.anchorX = 0
+end
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
         local group = self.view
 
+        system.setAccelerometerInterval( 100 ) -- 100 hz is max
+
+        reference_10 = display.newImage("res/bg.jpg")
         reference_0 = display.newImage( "res/test.png" )
+
+        createDebugTexts()
+
+
 
 end
 
@@ -20,11 +73,11 @@ end
 function scene:willEnterScene( event )
         local group = self.view
 
-        reference_0.anchorX = 0.5
-        reference_0.anchorY = 0.5
+        reference_0.xScale = 0.5
+        reference_0.yScale = 0.5
 
-        reference_0.x = display.contentCenterX
-        reference_0.y = display.contentCenterY
+        centerImage(reference_0)
+        centerImage(reference_10)
 
 end
 
@@ -33,6 +86,8 @@ function scene:enterScene( event )
         local group = self.view
 
         print("Entered Scene")
+
+        Runtime:addEventListener( "accelerometer" , accelerometerUpdate)    
 
 
 
